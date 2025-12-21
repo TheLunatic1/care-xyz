@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -69,7 +70,9 @@ export default function Home() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Button className="w-full">Book Baby Care</Button>
+                <Link href="/service/baby-care" className="block">
+                  <Button className="w-full">Book Baby Care</Button>
+                </Link>
               </CardContent>
             </Card>
 
@@ -88,7 +91,9 @@ export default function Home() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Button className="w-full">Book Elderly Care</Button>
+                <Link href="/service/elderly-service" className="block">
+                  <Button className="w-full">Book Elderly Care</Button>
+                </Link>
               </CardContent>
             </Card>
 
@@ -107,7 +112,9 @@ export default function Home() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Button className="w-full">Book Special Care</Button>
+                <Link href="/service/sick-people" className="block">
+                  <Button className="w-full">Book Special Care</Button>
+                </Link>
               </CardContent>
             </Card>
           </div>

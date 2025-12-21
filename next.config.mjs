@@ -11,6 +11,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'www.shutterstock.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'img.pikbest.com',
+      },
     ],
   },
 };
