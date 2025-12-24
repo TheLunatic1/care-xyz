@@ -25,6 +25,10 @@ export default function BookingPage() {
   const [area, setArea] = useState("");
   const [address, setAddress] = useState("");
 
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState(""); // "success" or "error"
+
   // Redirect if not authenticated
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -42,7 +46,7 @@ export default function BookingPage() {
 
   if (!session) return null;
 
-  // Service name & hourly rate
+  // Service config with rates
   const serviceConfig = {
     "baby-care": { name: "Baby Care", hourlyRate: 500 },
     "elderly-service": { name: "Elderly Service", hourlyRate: 600 },
@@ -53,7 +57,7 @@ export default function BookingPage() {
   const serviceName = config.name;
   const hourlyRate = config.hourlyRate;
 
-  // Divisions & cascading data
+  // Cascading location data
   const divisions = ["Dhaka", "Chittagong", "Rajshahi", "Khulna", "Barisal", "Sylhet", "Rangpur", "Mymensingh"];
 
   const districts = division === "Dhaka"
@@ -73,6 +77,7 @@ export default function BookingPage() {
     return [];
   })();
 
+  // Calculate total cost
   const durationInHours =
     durationType === "days" && durationAmount
       ? Number(durationAmount) * 24
@@ -81,6 +86,57 @@ export default function BookingPage() {
       : 0;
 
   const totalCost = durationInHours * hourlyRate;
+
+  // Handle confirm booking
+  const handleConfirm = async () => {
+    // Basic validation
+    if (!durationAmount || !durationType || !division || !district || !city || !area || !address) {
+      setMessage("Please fill all fields");
+      setMessageType("error");
+      return;
+    }
+
+    setLoading(true);
+    setMessage("");
+    setMessageType("");
+
+    const bookingData = {
+      serviceId,
+      serviceName,
+      durationAmount: Number(durationAmount),
+      durationType,
+      division,
+      district,
+      city,
+      area,
+      address,
+      totalCost,
+    };
+
+    try {
+      const res = await fetch("/api/bookings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(bookingData),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setMessage("Booking confirmed successfully! ♥ Redirecting to My Bookings...");
+        setMessageType("success");
+        setTimeout(() => router.push("/my-bookings"), 2000);
+      } else {
+        setMessage(data.error || "Failed to save booking");
+        setMessageType("error");
+      }
+    } catch (err) {
+      setMessage("Network error. Please try again.");
+      setMessageType("error");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <main className="min-h-screen bg-background py-16 px-8">
@@ -223,7 +279,7 @@ export default function BookingPage() {
             </div>
 
             {/* Total Cost */}
-            {durationInHours > 0 && hourlyRate > 0 && (
+            {totalCost > 0 && (
               <div className="text-center py-8 bg-primary/5 rounded-lg">
                 <p className="text-2xl font-semibold text-primary">
                   Total Cost: ৳{totalCost.toLocaleString("en-BD")}
@@ -234,11 +290,24 @@ export default function BookingPage() {
               </div>
             )}
 
+            {/* Confirm Button */}
             <div className="text-center">
-              <Button size="lg" className="px-12 py-6 text-lg">
-                Confirm Booking
+              <Button
+                size="lg"
+                className="px-12 py-6 text-lg"
+                onClick={handleConfirm}
+                disabled={loading || totalCost === 0}
+              >
+                {loading ? "Saving Booking..." : "Confirm Booking"}
               </Button>
             </div>
+
+            {/* Message */}
+            {message && (
+              <p className={`text-center text-lg font-medium ${messageType === "success" ? "text-green-600" : "text-destructive"}`}>
+                {message}
+              </p>
+            )}
           </CardContent>
         </Card>
       </div>
