@@ -1,9 +1,21 @@
-import './globals.css';
+import "./globals.css";
+import Navbar from "@/components/Navbar";
+import SessionWrapper from "@/components/SessionWrapper";
+
+export const metadata = {
+  title: "Care.xyz - Trusted Baby Sitting & Elderly Care",
+  description: "Reliable and compassionate care for your loved ones",
+};
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className="min-h-screen bg-background">
+        <SessionWrapper>
+          <Navbar />
+          {children}
+        </SessionWrapper>
+      </body>
     </html>
   );
 }

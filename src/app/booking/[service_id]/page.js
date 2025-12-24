@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -8,8 +10,37 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 
-export default function BookingPage({ params }) {
+export default function BookingPage() {
+  const params = useParams();
   const serviceId = params.service_id || "";
+
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  const [durationAmount, setDurationAmount] = useState("");
+  const [durationType, setDurationType] = useState("");
+  const [division, setDivision] = useState("");
+  const [district, setDistrict] = useState("");
+  const [city, setCity] = useState("");
+  const [area, setArea] = useState("");
+  const [address, setAddress] = useState("");
+
+  // Redirect if not authenticated
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/login");
+    }
+  }, [status, router]);
+
+  if (status === "loading") {
+    return (
+      <main className="min-h-screen bg-background flex items-center justify-center">
+        <p className="text-xl text-muted-foreground">Loading...</p>
+      </main>
+    );
+  }
+
+  if (!session) return null;
 
   // Service name & hourly rate
   const serviceConfig = {
@@ -22,30 +53,19 @@ export default function BookingPage({ params }) {
   const serviceName = config.name;
   const hourlyRate = config.hourlyRate;
 
-  // Form state
-  const [durationAmount, setDurationAmount] = useState("");
-  const [durationType, setDurationType] = useState("");
-  const [division, setDivision] = useState("");
-  const [district, setDistrict] = useState("");
-  const [city, setCity] = useState("");
-  const [area, setArea] = useState("");
-  const [address, setAddress] = useState("");
-
+  // Divisions & cascading data
   const divisions = ["Dhaka", "Chittagong", "Rajshahi", "Khulna", "Barisal", "Sylhet", "Rangpur", "Mymensingh"];
 
-  // Districts only Dhaka division
   const districts = division === "Dhaka"
     ? ["Dhaka", "Gazipur", "Narsingdi", "Tangail", "Manikganj", "Narayanganj", "Munshiganj"]
     : [];
 
-  // Cities example
   const cities = (() => {
     if (district === "Dhaka") return ["Mirpur", "Gulshan", "Dhanmondi", "Uttara", "Mohammadpur"];
     if (district === "Gazipur") return ["Gazipur Sadar", "Tongi", "Kaliakoir"];
     return [];
   })();
 
-  // Areas example
   const areas = (() => {
     if (city === "Mirpur") return ["Mirpur 1", "Mirpur 2", "Mirpur 10", "Mirpur 12"];
     if (city === "Gulshan") return ["Gulshan 1", "Gulshan 2", "Banani"];
@@ -53,7 +73,6 @@ export default function BookingPage({ params }) {
     return [];
   })();
 
-  // Calculate total cost
   const durationInHours =
     durationType === "days" && durationAmount
       ? Number(durationAmount) * 24
@@ -74,7 +93,7 @@ export default function BookingPage({ params }) {
           </CardHeader>
           <CardContent className="pt-8 space-y-12">
             <p className="text-center text-xl text-foreground/80">
-              You are booking: <span className="font-bold text-primary">{serviceName}</span>
+              Welcome, <span className="font-bold text-primary">{session.user?.name || session.user?.email}</span>
             </p>
 
             {/* Duration */}
@@ -215,7 +234,6 @@ export default function BookingPage({ params }) {
               </div>
             )}
 
-            {/* Confirm Button */}
             <div className="text-center">
               <Button size="lg" className="px-12 py-6 text-lg">
                 Confirm Booking

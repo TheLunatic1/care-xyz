@@ -93,13 +93,13 @@ export default async function ServiceDetail({ params }) {
                 </>
               )}
 
-              <div className="text-center">
-                <Link href={`/booking/${id}`}>
-                  <Button size="lg" className="text-lg px-10 py-6">
-                    Book This Service
-                  </Button>
-                </Link>
-              </div>
+            <div className="text-center">
+              <Link href={`/login?callbackUrl=/booking/${id}`}>
+                <Button size="lg" className="text-lg px-10 py-6">
+                  Book This Service
+                </Button>
+              </Link>
+            </div>
             </CardContent>
           </Card>
         </div>
