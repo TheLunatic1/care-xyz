@@ -55,7 +55,7 @@ export default function Home() {
       </section>
 
       {/* Services Overview */}
-      <section className="py-20 px-8 bg-muted/50">
+      <section id="services" className="py-20 px-8 bg-muted/50">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl font-bold text-primary text-center mb-12">
             Our Services
@@ -127,10 +127,44 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-20 px-8 text-center">
-        <p className="text-muted-foreground text-lg">
-          Services section complete! Homepage structure is now done (Hero + About + Services).
-        </p>
+      {/* Testimonials */}
+      <section className="py-20 px-8 bg-background">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl font-bold text-primary text-center mb-12">
+            What Our Families Say ♥
+          </h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            <Card className="shadow-lg">
+              <CardContent className="p-8 text-center">
+                <p className="text-lg text-foreground/80 italic mb-6">
+                  "Care.xyz made finding a trustworthy babysitter so easy. Our kids love their caregiver!"
+                </p>
+                <p className="font-semibold text-primary">Sarah M., Dhaka</p>
+                <p className="text-sm text-muted-foreground">Baby Care Client</p>
+              </CardContent>
+            </Card>
+
+            <Card className="shadow-lg">
+              <CardContent className="p-8 text-center">
+                <p className="text-lg text-foreground/80 italic mb-6">
+                  "Compassionate care for my elderly parents. The platform is secure and user-friendly."
+                </p>
+                <p className="font-semibold text-primary">Ahmed K., Gazipur</p>
+                <p className="text-sm text-muted-foreground">Elderly Service Client</p>
+              </CardContent>
+            </Card>
+
+            <Card className="shadow-lg">
+              <CardContent className="p-8 text-center">
+                <p className="text-lg text-foreground/80 italic mb-6">
+                  "Professional support during recovery. Highly recommend for sick care needs."
+                </p>
+                <p className="font-semibold text-primary">Fatima R., Narsingdi</p>
+                <p className="text-sm text-muted-foreground">Special Care Client</p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
       </section>
     </main>
   );
