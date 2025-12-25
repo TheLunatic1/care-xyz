@@ -44,9 +44,14 @@ export default function Navbar() {
           {status === "loading" && <div className="text-sm">Loading...</div>}
 
           {status === "unauthenticated" && (
-            <Button asChild>
-              <Link href="/login">Login</Link>
-            </Button>
+            <div className="flex items-center space-x-3">
+              <Button variant="outline" asChild>
+                <Link href="/login">Sign In</Link>
+              </Button>
+              <Button asChild>
+                <Link href="/register">Sign Up</Link>
+              </Button>
+            </div>
           )}
 
           {status === "authenticated" && (
@@ -102,9 +107,14 @@ export default function Navbar() {
 
               <div className="pt-4 border-t">
                 {status === "unauthenticated" && (
-                  <Button asChild className="w-full">
-                    <Link href="/login">Login</Link>
-                  </Button>
+                  <div className="space-y-3">
+                    <Button variant="outline" asChild className="w-full">
+                      <Link href="/login">Sign In</Link>
+                    </Button>
+                    <Button asChild className="w-full">
+                      <Link href="/register">Sign Up</Link>
+                    </Button>
+                  </div>
                 )}
 
                 {status === "authenticated" && (

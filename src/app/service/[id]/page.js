@@ -2,10 +2,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import BookServiceButton from "@/components/BookServiceButton";
 
 export default async function ServiceDetail({ params }) {
+  
   const resolvedParams = await params;
   const id = resolvedParams.id || "";
+  
 
   let title = "Service Not Found";
   let description = "Sorry, this service is not available at the moment. Please browse our other caring services.";
@@ -47,6 +50,7 @@ export default async function ServiceDetail({ params }) {
     image = "https://thumbs.dreamstime.com/b/tender-nurse-caring-child-patient-resting-comfortably-bed-illustration-soft-lighting-light-blue-beige-colors-410465113.jpg";
     imageAlt = "Tender nurse caring for patient in bed - soft pastel gentle illustration with calm lighting";
   }
+  
 
   return (
     <main className="min-h-screen bg-background">
@@ -94,11 +98,7 @@ export default async function ServiceDetail({ params }) {
               )}
 
             <div className="text-center">
-              <Link href={`/login?callbackUrl=/booking/${id}`}>
-                <Button size="lg" className="text-lg px-10 py-6">
-                  Book This Service
-                </Button>
-              </Link>
+              <BookServiceButton serviceId={id} />
             </div>
             </CardContent>
           </Card>
