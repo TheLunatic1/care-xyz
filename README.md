@@ -25,7 +25,6 @@
 | Technology       | Purpose                          |
 |------------------|----------------------------------|
 | Next.js 14 (App Router) | Full-stack framework             |
-| TypeScript       | Type safety                      |
 | MongoDB + Mongoose | Database & models (Users, Bookings) |
 | NextAuth.js      | Authentication (Credentials + Google) |
 | Tailwind CSS     | Responsive, soft styling         |
