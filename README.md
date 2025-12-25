@@ -62,7 +62,6 @@
 
 5. Open [http://localhost:3000](http://localhost:3000)
 
-Test login: `test@care.xyz` / `password123`
 
 ### 📱 Performance (Lighthouse)
 
