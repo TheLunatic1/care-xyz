@@ -1,56 +1,88 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import BookServiceButton from "@/components/BookServiceButton";
 
-export default async function ServiceDetail({ params }) {
-  
+// Dynamic metadata for SEO and browser tab title
+export async function generateMetadata({ params }) {
   const resolvedParams = await params;
   const id = resolvedParams.id || "";
-  
+
+  const serviceTitles = {
+    "baby-care": "Baby Care - Trusted Babysitting Service | Care.xyz",
+    "elderly-service": "Elderly Care - Compassionate Senior Support | Care.xyz",
+    "sick-people": "Special Care for Sick People - Professional Home Nursing | Care.xyz",
+  };
+
+  const serviceDescriptions = {
+    "baby-care":
+      "Loving and professional babysitting for infants and young children. Experienced, background-checked caregivers focused on safety and development.",
+    "elderly-service":
+      "Compassionate in-home care for seniors. Assistance with daily activities, companionship, and maintaining independence with dignity.",
+    "sick-people":
+      "Professional nursing support at home during illness or recovery. Gentle medical care and comfort from qualified caregivers.",
+  };
+
+  return {
+    title: serviceTitles[id] || "Care Service | Care.xyz",
+    description: serviceDescriptions[id] || "Trusted caregiving services for your loved ones.",
+  };
+}
+
+export default async function ServiceDetail({ params }) {
+  const resolvedParams = await params;
+  const id = resolvedParams.id || "";
 
   let title = "Service Not Found";
-  let description = "Sorry, this service is not available at the moment. Please browse our other caring services.";
+  let description =
+    "Sorry, this service is not available at the moment. Please browse our other caring services.";
   let features = [];
-  let image = "https://www.shutterstock.com/image-illustration/bokeh-light-beige-abstract-background-600nw-1080828776.jpg";
+  let image =
+    "https://www.shutterstock.com/image-illustration/bokeh-light-beige-abstract-background-600nw-1080828776.jpg";
   let imageAlt = "Soft warm beige abstract background with gentle bokeh - serene and caring atmosphere";
 
   if (id === "baby-care") {
     title = "Baby Care";
-    description = "Loving and professional babysitting for infants and young children. Our caregivers are experienced, background-checked, and focused on fun, safety, and early development.";
+    description =
+      "Loving and professional babysitting for infants and young children. Our caregivers are experienced, background-checked, and focused on fun, safety, and early development.";
     features = [
       "Playful activities and educational games",
       "Feeding, diapering, and nap routines",
       "CPR-certified and child safety trained",
-      "Flexible hours including evenings and weekends"
+      "Flexible hours including evenings and weekends",
     ];
-    image = "https://thumbs.dreamstime.com/b/babysitter-child-cartoon-characters-set-sketch-vector-illustration-isolated-babysitter-child-cartoon-characters-set-sketch-187350636.jpg";
-    imageAlt = "Gentle cartoon illustration of babysitter playing with happy children - soft pastel caring style";
+    image =
+      "https://thumbs.dreamstime.com/b/babysitter-child-cartoon-characters-set-sketch-vector-illustration-isolated-babysitter-child-cartoon-characters-set-sketch-187350636.jpg";
+    imageAlt =
+      "Gentle cartoon illustration of babysitter playing with happy children - soft pastel caring style";
   } else if (id === "elderly-service") {
     title = "Elderly Service";
-    description = "Compassionate in-home care for seniors. We help with daily activities, companionship, and maintaining independence with dignity and warmth.";
+    description =
+      "Compassionate in-home care for seniors. We help with daily activities, companionship, and maintaining independence with dignity and warmth.";
     features = [
       "Assistance with mobility and personal care",
       "Medication reminders and meal preparation",
       "Light housekeeping and errands",
-      "Engaging conversation and emotional support"
+      "Engaging conversation and emotional support",
     ];
-    image = "https://thumbs.dreamstime.com/b/compassionate-female-caregiver-supporting-elderly-woman-sitting-chair-simple-vector-illustration-white-friendly-uniform-402271963.jpg";
+    image =
+      "https://thumbs.dreamstime.com/b/compassionate-female-caregiver-supporting-elderly-woman-sitting-chair-simple-vector-illustration-white-friendly-uniform-402271963.jpg";
     imageAlt = "Warm illustration of caregiver supporting elderly person - compassionate soft pastel style";
   } else if (id === "sick-people") {
     title = "Special Care for Sick People";
-    description = "Professional nursing support at home during illness or recovery. Gentle care to help patients heal comfortably with medical expertise and kindness.";
+    description =
+      "Professional nursing support at home during illness or recovery. Gentle care to help patients heal comfortably with medical expertise and kindness.";
     features = [
       "Post-surgery or illness recovery support",
       "Wound care and vital monitoring",
       "Pain management and comfort care",
-      "Coordination with doctors and family"
+      "Coordination with doctors and family",
     ];
-    image = "https://thumbs.dreamstime.com/b/tender-nurse-caring-child-patient-resting-comfortably-bed-illustration-soft-lighting-light-blue-beige-colors-410465113.jpg";
-    imageAlt = "Tender nurse caring for patient in bed - soft pastel gentle illustration with calm lighting";
+    image =
+      "https://thumbs.dreamstime.com/b/tender-nurse-caring-child-patient-resting-comfortably-bed-illustration-soft-lighting-light-blue-beige-colors-410465113.jpg";
+    imageAlt =
+      "Tender nurse caring for patient in bed - soft pastel gentle illustration with calm lighting";
   }
-  
 
   return (
     <main className="min-h-screen bg-background">
@@ -71,17 +103,24 @@ export default async function ServiceDetail({ params }) {
         </div>
       </div>
 
-      {/* Content */}
-      <section className="py-16 px-8 -mt-12 relative z-10">
+      {/* Back to Services link */}
+      <section className="py-4 px-8">
+        <div className="max-w-5xl mx-auto">
+          <Link href="/" className="text-primary hover:underline text-lg">
+            ← Back to Services
+          </Link>
+        </div>
+      </section>
+
+      {/* Main Content */}
+      <section className="py-12 px-8 -mt-12 relative z-10">
         <div className="max-w-5xl mx-auto">
           <Card className="shadow-xl">
             <CardHeader>
               <CardTitle className="text-3xl text-primary">About {title}</CardTitle>
             </CardHeader>
             <CardContent>
-              <CardDescription className="text-lg mb-8">
-                {description}
-              </CardDescription>
+              <CardDescription className="text-lg mb-8">{description}</CardDescription>
 
               {features.length > 0 && (
                 <>
@@ -97,9 +136,9 @@ export default async function ServiceDetail({ params }) {
                 </>
               )}
 
-            <div className="text-center">
-              <BookServiceButton serviceId={id} />
-            </div>
+              <div className="text-center">
+                <BookServiceButton serviceId={id} />
+              </div>
             </CardContent>
           </Card>
         </div>

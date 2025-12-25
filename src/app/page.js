@@ -3,6 +3,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 
+export const metadata = {
+  title: "Care.xyz - Trusted Baby Sitting & Elderly Care Service",
+  description:
+    "Reliable, compassionate, and professional care for babies, elderly, and family members. Book trusted caregivers easily and securely.",
+};
+
 export default function Home() {
   return (
     <main className="min-h-screen">
