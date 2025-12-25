@@ -11,6 +11,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon.png" sizes="any" />
+        <link rel="apple-touch-icon" href="/favicon.png" />
+        <title>Care.xyz - Trusted Baby Sitting & Elderly Care</title>
+      </head>
       <body className="min-h-screen bg-background scroll-smooth">
         <SessionWrapper>
           <Navbar />
