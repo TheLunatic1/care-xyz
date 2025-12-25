@@ -111,9 +111,19 @@ export default function LoginPage() {
             Test account: <strong>test@care.xyz</strong> / <strong>password123</strong>
           </p>
 
-          <p className="text-center text-sm text-muted-foreground">
-            We care about your family's safety and privacy ♥
-          </p>
+          <div className="text-center space-y-4">
+
+            <p className="text-sm text-muted-foreground">
+              New to Care.xyz?{" "}
+              <a href={`/register?callbackUrl=${encodeURIComponent(callbackUrl)}`} className="text-primary hover:underline font-medium">
+                Create an account
+              </a>
+            </p>
+
+            <p className="text-sm text-muted-foreground">
+              We care about your family&apos;s privacy and safety ♥
+            </p>
+          </div>
         </CardContent>
       </Card>
     </main>
