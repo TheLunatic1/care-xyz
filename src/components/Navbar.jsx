@@ -2,6 +2,7 @@
 
 import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -20,7 +21,12 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between px-4 mx-auto">
         {/* Logo */}
-        <Link href="/" className="flex items-center space-x-2">
+        <Link href="/" className="flex items-center space-x-2 bg-transparent">
+          <img
+            src="https://i.imgur.com/edOFDiz.png"
+            alt="Care.xyz - Family care heart logo"
+            className="w-10 h-10 rounded-full object-contain bg-transparent"
+          />
           <span className="text-2xl font-bold text-primary">Care.xyz</span>
         </Link>
 
